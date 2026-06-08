@@ -6,7 +6,7 @@ from datetime import datetime
 from sqlalchemy import func
 import uuid
 import secrets
-from src.core.file_handler import save_image
+
 
 
 class User(Base):
