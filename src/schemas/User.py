@@ -35,6 +35,7 @@ class UserOutput(BaseModel):
             return None
         return f"{BACKEND_URL}{image_url}"
 
+
 class UserUpdate:
     def __init__(self, name: str | None = Form(None), image: UploadFile | None = File(None)):
         self.name = name

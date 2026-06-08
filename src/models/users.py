@@ -24,6 +24,8 @@ class User(Base):
     def __repr__(self):
         return f"<User {self.name}>" 
 
+
+
 class ApiKey(Base):
     __tablename__ = "api_keys"
     id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
