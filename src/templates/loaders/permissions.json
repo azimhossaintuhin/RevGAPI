@@ -1,0 +1,95 @@
+[
+    {
+        "module":"users",
+        "roles": [
+            {
+                "name":"Admin",
+                "description":"Admin role"
+            }
+        ],
+        "permissions": [
+            {
+                "name":"Add User",
+                "code":"add_user",
+                "description":"Add a new user"
+            },
+            {
+                "name":"Edit User",
+                "code":"edit_user",
+                "description":"Edit a user"
+            },
+            {
+                "name":"Delete User",
+                "code":"delete_user",
+                "description":"Delete a user"
+            },
+            {
+                "name":"View User",
+                "code":"view_user",
+                "description":"View a user"
+            }
+        ]
+    },
+    {
+        "module":"api_keys",
+        "roles": [
+            {
+                "name":"Admin",
+                "description":"Admin role"
+            }
+        ],
+        "permissions": [
+            {
+                "name":"Add API Key",
+                "code":"add_api_key",
+                "description":"Add a new API key"
+            },
+            {
+                "name":"Edit API Key",
+                "code":"edit_api_key",
+                "description":"Edit a API key"
+            },
+            {
+                "name":"Delete API Key",
+                "code":"delete_api_key",
+                "description":"Delete a API key"
+            },
+            {
+                "name":"View API Key",
+                "code":"view_api_key",
+                "description":"View a API key"
+            }
+        ]
+    },
+    {
+        "module":"roles",
+        "roles": [
+            {
+                "name":"Admin",
+                "description":"Admin role"
+            }
+        ],
+        "permissions": [
+            {
+                "name":"Add Role",
+                "code":"add_role",
+                "description":"Add a new role"
+            },
+            {
+                "name":"Edit Role",
+                "code":"edit_role",
+                "description":"Edit a role"
+            },
+            {
+                "name":"Delete Role",
+                "code":"delete_role",
+                "description":"Delete a role"
+            },
+            {
+                "name":"View Role",
+                "code":"view_role",
+                "description":"View a role"
+            }
+        ]
+    }
+]

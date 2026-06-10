@@ -11,6 +11,10 @@ from fastapi import Depends
 from sqlalchemy import select
 from sqlalchemy.orm import noload
 from uuid import UUID
+from src.services.Email import EmailService
+ 
+email_service = EmailService()
+
 class UsersService:
     def __init__(self, db:AsyncSession):
         self.db = db
@@ -28,6 +32,12 @@ class UsersService:
         self.db.add(user)
         await self.db.commit()
         await self.db.refresh(user)
+        await email_service.send_email(
+            email=user.email,
+            subject="Welcome to the platform",
+            template_name="",
+            **user.model_dump()
+        )
         return UserOutput.model_validate(user)
     
     async def login_user(self, user:UserLogin) -> UserLoginOutput:
@@ -49,6 +59,8 @@ class UsersService:
             })
         )
 
+
+    
 
     async def get_user_profile(self, user_id: UUID) -> UserOutput:
         user = (

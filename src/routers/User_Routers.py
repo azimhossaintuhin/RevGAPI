@@ -1,10 +1,9 @@
-from fastapi import APIRouter, Depends, File, UploadFile, Form
 from fastapi.security import OAuth2PasswordRequestForm
-from typing import Annotated
-from src.dependencies.get_user import CurrentUserID
+from uuid import UUID
 from src.schemas.User import UserCreate, UserOutput, UserLoginOutput, UserLogin, UserUpdate
 from src.services.Users import user_service
-
+from fastapi import APIRouter, Depends
+from src.dependencies.permissions import required_permissions
 
 
 
@@ -32,7 +31,7 @@ async def login_user(
 @router.get("/profile", response_model=UserOutput)
 async def get_user_profile(
     service: user_service,
-    user_id: CurrentUserID,
+    user_id: UUID = Depends(required_permissions(["view_user"],mode="ANY")),
 ) -> UserOutput:
     return await service.get_user_profile(user_id)
 
@@ -40,7 +39,10 @@ async def get_user_profile(
 @router.put("/profile", response_model=UserOutput)
 async def update_user_profile(
     service: user_service,
-    user_id: CurrentUserID,
-    user_update:UserUpdate = Depends(),
+    user_update: UserUpdate = Depends(),
+    user_id: UUID = Depends(required_permissions(["edit_user"],mode="ANY")),
 ) -> UserOutput:
     return await service.update_user_profile(user_id, user_update)
+
+
+
