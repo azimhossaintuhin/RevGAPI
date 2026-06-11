@@ -5,7 +5,6 @@ from uuid import UUID
 from typing import Literal
 
 class PermissionEngine:
-    
     def __init__(self, session: AsyncSession):
         self.session = session
     

@@ -1,12 +1,12 @@
-import pkgutil
-import importlib
-from fastapi import FastAPI
-from  src.config.database import async_engine, get_session ,Base
 from contextlib import asynccontextmanager
-from src.routers import User_Routers
-from  fastapi.staticfiles import StaticFiles
+
+from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
+
 from src.core.file_handler import IMAGE_UPLOAD_FOLDER
 from src.events import load_events
+from src.api.v1 import router as api_v1_router
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -14,13 +14,9 @@ async def lifespan(app: FastAPI):
     yield
 
 
-
-
-
 app = FastAPI(lifespan=lifespan)
 
-app.include_router(User_Routers.router)
-
+app.include_router(api_v1_router)
 app.mount("/media", StaticFiles(directory=IMAGE_UPLOAD_FOLDER), name="media")
 
 @app.get("/")

@@ -24,9 +24,10 @@ class User(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=func.now())
     updated_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=func.now())
     is_active: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+    is_verified: Mapped[bool] = mapped_column(Boolean, default=False)
     is_deleted: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
     api_key: Mapped["ApiKey"] = relationship("ApiKey", back_populates="user", lazy="joined", uselist=False)
-    user_token: Mapped["UserToken"] = relationship("UserToken", back_populates="user", uselist=False)
+    user_token: Mapped["UserToken"] = relationship("UserToken", back_populates="user", uselist=False , cascade="all, delete-orphan")
     user_roles: Mapped[list["UserRole"]] = relationship("UserRole", back_populates="user") # noqa: F821
     user_permissions: Mapped[list["UserPermission"]] = relationship("UserPermission", back_populates="user") # noqa: F821
     def __repr__(self):
@@ -39,9 +40,9 @@ class UserToken(Base):
     __tablename__ = "user_tokens"
     
     id: Mapped[UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    token_type: Mapped[TokenType] = mapped_column(SQLAlchemyEnum(TokenType), nullable=False)
+    token_type: Mapped[TokenType] = mapped_column(SQLAlchemyEnum(TokenType, name="tokentype"), nullable=False, default=TokenType.ep)
     user_id: Mapped[UUID] = mapped_column(UUID, ForeignKey("users.id",ondelete="CASCADE"), nullable=False , unique=True)
-    token: Mapped[str] = mapped_column(String(255), nullable=False, default=lambda:uuid.uuid4()[0:8])
+    token: Mapped[str] = mapped_column(String(255), nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, default=func.now())
     user: Mapped[User] = relationship("User", back_populates="user_token", uselist=False)
     def __repr__(self):

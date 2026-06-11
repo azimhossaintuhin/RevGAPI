@@ -5,7 +5,7 @@ from src.prototypes.jwt_payload import JwtPayload
 from uuid import UUID
 from typing import Annotated
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/users/login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/users/login")
 
 
 def get_current_user(token: str = Depends(oauth2_scheme)) -> UUID:

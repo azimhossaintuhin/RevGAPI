@@ -2,9 +2,9 @@ from  fastapi_mail import FastMail , MessageSchema , MessageType
 from src.utils.email import conf, render_template
 
 
-class EmailService:
+class EmailEngine:
     
-    async  def  send_email(
+     async def  send_email(
         self,
         email:str,
         subject:str,
@@ -12,7 +12,7 @@ class EmailService:
         **kwargs
     ):
         html = render_template(template_name, **kwargs)
-        
+        print(kwargs)
         message = MessageSchema(
             subject=subject,
             recipients=[email],
